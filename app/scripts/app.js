@@ -31,4 +31,8 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+  })
+  .run(function ($rootScope) {
+    $rootScope.background='rgb(0,100,200)';
+  })
+  ;

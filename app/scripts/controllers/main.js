@@ -10,9 +10,9 @@
 angular.module('angularbootApp')
   .controller('MainCtrl', function ($scope) {
     $scope.settings = {
-      red:{value: 10},
-      green:{value:20},
-      blue:{value: 40}
+      red:{value: 10, type:'danger'},
+      green:{value:20, type:'success'},
+      blue:{value: 40, type:'info'}
     };
   
   /*  $scope.progressbar = {}

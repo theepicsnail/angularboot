@@ -9,10 +9,22 @@
 angular.module('angularbootApp')
   .directive('settingBar', function () {
     return {
-      templateUrl: 'views/settingBar.html'
-      /*restrict: 'E',
-      /*link: function postLink(scope, element, attrs) {
-        element.text('this is the settingBar directive');
-      }*/
+      templateUrl: 'views/settingBar.html',
+      scope: {
+        setting:'=settingBar'
+      },
+      controller: function($scope) {
+        $scope.updatePercentage= 
+          function(setting, value) {
+          var newVal = setting.value + value
+          if (newVal < 0) {
+            newVal = 0;
+          }
+          else if(newVal > 100) {
+            newVal = 100
+          }
+          setting.value = newVal
+        }
+      }
     };
   });

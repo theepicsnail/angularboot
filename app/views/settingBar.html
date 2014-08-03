@@ -2,7 +2,7 @@
   <div class="col-xs-2">
     <button 
       class="btn btn-primary"
-      data-ng-click="updatePercentage(-10)"
+      data-ng-click="updatePercentage(setting, -10)"
     >
     Lower
     </button>
@@ -12,17 +12,15 @@
       class="progress-striped active"
       max="100"
       min="0"
-      value="progressbar.value"
-      type="{{progressbar.type}}"
+      value="setting.value"
     >
-      <b>{{progressbar.value}}</b>
+      <b>{{setting.value}}</b>
     </progressbar>
   </div>
   <div class="col-xs-2">
     <button 
       class="btn btn-primary"
-      data-ng-click="updatePercentage(10)"
-    >
+      data-ng-click="updatePercentage(setting, 10)">
     Raise
     </button>
   </div>

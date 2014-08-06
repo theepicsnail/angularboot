@@ -62,7 +62,10 @@ module.exports = function (grunt) {
         ]
       }
     },
-
+    exec: {
+      'api-serve': 'killall nodemon; nodemon --debug api/server.js &',
+      'node-inspector': 'killall node-inspector; node-inspector &'
+    },
     // The actual grunt server settings
     connect: {
       options: {
@@ -71,8 +74,21 @@ module.exports = function (grunt) {
         hostname: '0.0.0.0',
         livereload: 35733
       },
-      livereload: {
-        options: {
+      livereload:
+      { proxies:
+        [ { context:
+            [ '/api'
+            ]
+          , host: 'localhost'
+          , port: 8888
+          , https: false
+          , changeOrigin: false
+          , xforward: false
+          , timeout: 9999999999999
+          , ws: true
+          }
+        ]
+      , options: {
           open: true,
           middleware: function (connect) {
             return [
@@ -81,7 +97,7 @@ module.exports = function (grunt) {
                 '/bower_components',
                 connect.static('./bower_components')
               ),
-              connect.static(appConfig.app)
+              connect.static(appConfig.app),
             ];
           }
         }
@@ -361,12 +377,18 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
     if (target === 'dist') {
-      return grunt.task.run(['build', 'connect:dist:keepalive']);
+      return grunt.task.run(
+        [ 'build'
+        , 'exec'
+        , 'connect:dist:keepalive'
+        ]
+      );
     }
 
     grunt.task.run([
       'clean:server',
       'wiredep',
+      'exec',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',

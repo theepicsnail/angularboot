@@ -1,22 +1,27 @@
 {
   "name": "angularboot",
   "version": "0.0.0",
+  "homepage": "https://github.com/theepicsnail/angularboot",
+  "authors": [
+    "theepicsnail <theepicsnail@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
-    "angular": "1.2.16",
-    "json3": "~3.3.1",
-    "es5-shim": "~3.1.0",
     "bootstrap": "~3.2.0",
-    "angular-resource": "1.2.16",
-    "angular-cookies": "1.2.16",
-    "angular-sanitize": "1.2.16",
-    "angular-animate": "1.2.16",
-    "angular-touch": "1.2.16",
-    "angular-route": "1.2.16",
+    "angular": "~1.2.21",
+    "angular-animate": "~1.2.21",
+    "angular-cookies": "~1.2.21",
+    "angular-resource": "~1.2.21",
+    "angular-route": "~1.2.21",
+    "angular-sanitize": "~1.2.21",
+    "angular-touch": "~1.2.21",
     "angular-bootstrap": "~0.11.0"
-  },
-  "devDependencies": {
-    "angular-mocks": "1.2.16",
-    "angular-scenario": "1.2.16"
-  },
-  "appPath": "app"
+  }
 }

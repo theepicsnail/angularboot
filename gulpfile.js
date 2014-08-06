@@ -1,7 +1,5 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
-var express = require('express');
-var path = require('path');
 var tinylr = require('tiny-lr');
 
 var createServers = function (port, lrport) {
@@ -10,14 +8,11 @@ var createServers = function (port, lrport) {
     gutil.log('LR Listening on', lrport);
   });
 
-  var app = express();
-  app.use(express.query())
-    .use(require('connect-livereload')({port: lrport}))
-    .use('/', express.static(path.resolve('./app')))
-    .use('/bower_components',  express.static('./bower_components'))
-    .listen(port, function () {
-      gutil.log('listening on', port);
-    });
+  var app = require('./server/main.js');
+  app.use(require('connect-livereload')({port: 2001 }))
+  app.listen(port, function () {
+    gutil.log('listening on', port);
+  });
 
   return {
     lr: lr,

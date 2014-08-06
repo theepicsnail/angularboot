@@ -1,14 +1,10 @@
-root = __dirname + "/..";
+var gutil = require('gulp-util');
 var express = require('express');
-var livereload = require('connect-livereload');
-var body = require('body-parser');
+var path = require('path');
 
-app = express();
-app.use(body());
-app.use(livereload())
-app.use(express.static(root+ '/app'));
-app.use('/bower_components',  express.static(root + '/bower_components'));
-app.get('/', function (req,res) { return res.render('index.html'); });
-
-console.log("theepicsnail.net:3000");
-app.listen(3000);
+var app = express();
+app.use(express.query())
+  .use('/', express.static(path.resolve('./app')))
+  .use('/bower_components',  express.static('./bower_components'))
+;
+module.exports = app; 

@@ -8,11 +8,29 @@ var createServers = function (port, lrport) {
     gutil.log('LR Listening on', lrport);
   });
 
-  var app = require('./server/main.js');
-  app.use(require('connect-livereload')({port: 2001 }))
-  app.listen(port, function () {
-    gutil.log('listening on', port);
+  var express = require('express');
+  var path = require('path');
+  var app = express(app);
+
+  var sockjs = require('sockjs');
+  var sjsserver = sockjs.createServer({ sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js" });
+  sjsserver.on('connection', function(conn) {
+    console.log(conn);
   });
+
+  sjsserver.installHandlers(app, {prefix:'/sjs'});
+  app
+    .get('/sjs/info', function(req, res) { console.log(req); })
+    .use(express.query())
+    .use(require('connect-livereload')({port: lrport}))
+    .use('/', express.static(path.resolve('./app')))
+    .use('/bower_components',  express.static('./bower_components'))
+    .get('/', function(req, res) { res.sendfile('index.html'); })
+  ;
+
+  app.listen(port, function () {
+      gutil.log('listening on', port);
+    });
 
   return {
     lr: lr,

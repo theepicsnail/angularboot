@@ -8,29 +8,31 @@ var createServers = function (port, lrport) {
     gutil.log('LR Listening on', lrport);
   });
 
-  var express = require('express');
-  var path = require('path');
-  var app = express(app);
-
   var sockjs = require('sockjs');
-  var sjsserver = sockjs.createServer({ sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js" });
-  sjsserver.on('connection', function(conn) {
-    console.log(conn);
+  var sjsserver = sockjs.createServer(
+    { sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js" }
+  );
+  sjsserver.on('connection', function(conn) { 
+    console.log('connect'); 
+    conn.on('data', function(data) {
+      console.log('data', data);
+      conn.write(data);
+    });
   });
 
-  sjsserver.installHandlers(app, {prefix:'/sjs'});
-  app
-    .get('/sjs/info', function(req, res) { console.log(req); })
-    .use(express.query())
-    .use(require('connect-livereload')({port: lrport}))
-    .use('/', express.static(path.resolve('./app')))
-    .use('/bower_components',  express.static('./bower_components'))
-    .get('/', function(req, res) { res.sendfile('index.html'); })
-  ;
+  var http = require('http');
+  var express = require('express');
 
-  app.listen(port, function () {
-      gutil.log('listening on', port);
-    });
+  var app = express();
+  var server = http.createServer(app);
+  sjsserver.installHandlers(server, {prefix:'/sjs'});
+
+  app.use(require('connect-livereload')({port: lrport}));
+  app.use('/bower_components', express.static(__dirname + '/bower_components'));
+  app.use('/',express.static(__dirname + '/app'));
+  server.listen(port, function () {
+    gutil.log('listening on', port);
+  });
 
   return {
     lr: lr,

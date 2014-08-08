@@ -14,6 +14,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
   </head>
   <body style="background:{{background}};">
     <!--[if lt IE 7]>
@@ -78,6 +79,14 @@
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/directives/settingbar.js"></script>
         <!-- endbuild -->
-    
+   <script>
+    var sock = new SockJS('http://theepicsnail.net:2000/sjs');
+    sock.onopen = function() {
+      sock.send(+new Date());
+    }
+    sock.onmessage = function(msg) {
+      console.log((+new Date() - parseInt(msg.data))/1000.0 + " second delay");
+    }
+   </script>
 </body>
 </html>

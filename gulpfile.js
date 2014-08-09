@@ -7,25 +7,14 @@ var createServers = function (port, lrport) {
   lr.listen(lrport, function () {
     gutil.log('LR Listening on', lrport);
   });
-
-  var sockjs = require('sockjs');
-  var sjsserver = sockjs.createServer(
-    { sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js" }
-  );
-  sjsserver.on('connection', function(conn) { 
-    console.log('connect'); 
-    conn.on('data', function(data) {
-      console.log('data', data);
-      conn.write(data);
-    });
-  });
-
   var http = require('http');
   var express = require('express');
 
   var app = express();
   var server = http.createServer(app);
-  sjsserver.installHandlers(server, {prefix:'/sjs'});
+
+  require('./server/main')(server)
+
 
   app.use(require('connect-livereload')({port: lrport}));
   app.use('/bower_components', express.static(__dirname + '/bower_components'));

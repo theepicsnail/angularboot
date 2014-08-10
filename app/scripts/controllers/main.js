@@ -21,9 +21,5 @@ angular.module('angularbootApp')
         newValue.green.value + "," +    
         newValue.blue.value + ")" 
     },true);
-  /*  $scope.progressbar = {}
-    $scope.progressbar.value = 0
-    $scope.progressbar.type = "danger"
-*/
 });
 

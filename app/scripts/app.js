@@ -10,12 +10,7 @@
  */
 angular
   .module('angularbootApp', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
     'ngRoute',
-    'ngSanitize',
-    'ngTouch',
     'ui.bootstrap'
   ])
   .config(function ($routeProvider) {

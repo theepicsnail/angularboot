@@ -1,40 +1,40 @@
 <!doctype html>
-<html class="no-js" ng-app="angularbootApp">
+<html data-ng-app='angularbootApp'>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="styles/main.css">
-    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <meta name='description' content=''>
+    <meta name='viewport' content='width=device-width'>
+    <link rel='stylesheet' href='bower_components/bootstrap/dist/css/bootstrap.css' />
+    <link rel='stylesheet' href='styles/main.css'>
+    <script src='http://cdn.sockjs.org/sockjs-0.3.min.js'></script>
   </head>
-  <body style="background:{{background}};">
+  <body style='background:{{background}};'>
     <!--[if lt IE 9]>
-    <script src="bower_components/es5-shim/es5-shim.js"></script>
-    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <script src='bower_components/es5-shim/es5-shim.js'></script>
+    <script src='bower_components/json3/lib/json3.min.js'></script>
     <![endif]-->
     <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <p class='browsehappy'>You are using an <strong>outdated</strong> browser. Please <a href='http://browsehappy.com/'>upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/directives/settingBar/settingBar.js"></script>
+    <script src='bower_components/angular/angular.js'></script>
+    <script src='bower_components/angular-route/angular-route.js'></script>
+    <script src='bower_components/angular-bootstrap/ui-bootstrap-tpls.js'></script>
+    <script src='scripts/app.js'></script>
+    <script src='scripts/controllers/main.js'></script>
+    <script src='scripts/directives/settingBar/settingBar.js'></script>
   <script>
   var sock = new SockJS('http://theepicsnail.net:2000/sjs');
   sock.onopen = function() {
     sock.send(+new Date());
   }
   sock.onmessage = function(msg) {
-    console.log((+new Date() - parseInt(msg.data))/1000.0 + " second delay");
+    console.log((+new Date() - parseInt(msg.data))/1000.0 + ' second delay');
   }
   </script>
-  <div class="container">
-    <div ng-view=""></div>
+  <div class='container'>
+    <div data-ng-view></div>
   </div>
 </body>
 </html>

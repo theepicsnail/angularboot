@@ -14,12 +14,27 @@ angular.module('angularbootApp')
       green:{value:20, type:'success'},
       blue:{value: 40, type:'info'}
     };
- 
+
     $scope.$watch('settings', function (newValue) {
+      if(sock.readyState && !netUpdate)
+        sock.send(JSON.stringify(newValue));
+      netUpdate = false;
       $rootScope.background = 'rgb(' +
-        newValue.red.value + "," +    
-        newValue.green.value + "," +    
-        newValue.blue.value + ")" 
+        newValue.red.value + "," +
+        newValue.green.value + "," +
+        newValue.blue.value + ")"
     },true);
+
+    var netUpdate = false;
+    var sock = new SockJS('http://theepicsnail.net:2000/sjs');
+    console.log(sock);
+    sock.onmessage = function(msg) {
+      netUpdate = true;
+      console.log("Sock:", msg);
+      console.log($scope);
+      $scope.settings = JSON.parse(msg.data);
+      $scope.$apply();
+    };
+
 });
 

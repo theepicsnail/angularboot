@@ -24,15 +24,6 @@
     <script src='scripts/app.js'></script>
     <script src='scripts/controllers/main.js'></script>
     <script src='scripts/directives/settingBar/settingBar.js'></script>
-  <script>
-  var sock = new SockJS('http://theepicsnail.net:2000/sjs');
-  sock.onopen = function() {
-    sock.send(+new Date());
-  }
-  sock.onmessage = function(msg) {
-    console.log((+new Date() - parseInt(msg.data))/1000.0 + ' second delay');
-  }
-  </script>
   <div class='container'>
     <div data-ng-view></div>
   </div>
